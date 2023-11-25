@@ -1,0 +1,59 @@
+version: 2
+
+sources:
+  - name: crm_a
+    database: key-hope-406212
+    schema: crm_a
+    tables:
+      - name: contact
+        loaded_at_field: _PARTITIONTIME
+        freshness:
+          warn_after: {count: 24, period: hour}
+        
+      - name: account
+        loaded_at_field: _PARTITIONTIME
+        freshness:
+          warn_after: {count: 24, period: hour}
+
+  - name: crm_b
+    database: key-hope-406212
+    schema: crm_b
+    tables:
+      - name: contact
+        loaded_at_field: _PARTITIONTIME
+        freshness:
+          warn_after: {count: 24, period: hour}
+        
+      - name: account
+        loaded_at_field: _PARTITIONTIME
+        freshness:
+          warn_after: {count: 24, period: hour}
+
+  - name: fin_a
+    database: key-hope-406212
+    schema: fin_a
+    tables:
+      - name: completedtrans
+        loaded_at_field: _PARTITIONTIME
+        freshness:
+          warn_after: {count: 24, period: hour}
+
+  - name: fin_b
+    database: key-hope-406212
+    schema: fin_b
+    tables:
+      - name: completedtrans
+        loaded_at_field: _PARTITIONTIME
+        freshness:
+          warn_after: {count: 24, period: hour}
+
+models:
+  - name: stg_sources__contact
+    config:
+      materialized: view
+  - name: stg_sources__account
+    config:
+      materialized: view
+  - name: stg_sources__completedtrans
+    config:
+      materialized: view
