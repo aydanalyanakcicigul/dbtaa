@@ -1,0 +1,384 @@
+version: 2
+
+models:
+  - name: account_contact_link
+    description: An account_contact_link {{ doc("def_ent_link") }} accounts and contacts.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(account_hsh || '-' || contact_hsh)"
+    columns: 
+      - name: link_hsh
+        description: Link {{ doc("def_hsh") }} account and contact link.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: account_hsh
+        description: Account {{ doc("def_hsh") }} account.
+      - name: contact_hsh
+        description: Contact {{ doc("def_hsh") }} contact.
+
+  - name: account_hub
+    description: An Account Hub {{ doc("def_ent_account") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(account_hsh)"
+    columns: 
+      - name: account_hsh
+        description: Account {{ doc("def_hsh") }} account.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: load_dt
+        description: '{{ doc("def_load_dt") }}'
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: account_id
+        description: Account Id {{ doc("def_att_id") }} an account.
+        constraints:
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+  - name: account_product_link
+    description: An account_product_link {{ doc("def_ent_link") }} accounts and products.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(account_hsh || '-' || product_hsh)"
+    columns: 
+      - name: link_hsh
+        description: Link {{ doc("def_hsh") }} account and product link.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: account_hsh
+        description: Account {{ doc("def_hsh") }} account.
+      - name: product_hsh
+        description: Product {{ doc("def_hsh") }} product.
+
+  - name: account_sat
+    description: An Account Sat {{ doc("def_ent_account") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(account_hsh || '-' || valid_from_date)"
+    columns: 
+      - name: account_hsh
+        description: Account {{ doc("def_hsh") }} account.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: account_hsh_diff
+        description: Account {{ doc("def_hsh_diff") }}
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: valid_to_date
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+      - name: a_account_id
+        description: A Account Id {{ doc("def_att_id") }} an account.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: a_account_user_type
+        description: A Account User Type is the type of the user (owner or user) an account.
+  
+  - name: contact_hub
+    description: A Contact Hub {{ doc("def_ent_contact") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(contact_hsh)"
+    columns: 
+      - name: contact_hsh
+        description: Contact {{ doc("def_hsh") }} contact.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: load_dt
+        description: '{{ doc("def_load_dt") }}'
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: contact_id
+        description: Contact Id {{ doc("def_att_id") }} a contact.
+        constraints:
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+  
+  - name: contact_link_sa
+    description: A Contact Link Sa (Same As) is the self referencing entity of 2 equal but differently identified contact id's.
+    config:
+      materialized: table
+    columns: 
+      - name: contact_id
+        description: Contact Id {{ doc("def_att_id") }} a contact.
+      - name: contact_hsh
+        description: Contact {{ doc("def_hsh") }} contact.
+      - name: rel_contact_id
+        description: Rel Contact Id {{ doc("def_att_id") }} a related contact to the contact Id.
+      - name: rel_contact_hsh
+        description: Rel Contact {{ doc("def_hsh") }} related contact.
+  
+  - name: contact_sat
+    description: A Contact Sat {{ doc("def_ent_contact") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(contact_hsh || '-' || valid_from_date)"
+    columns: 
+      - name: contact_hsh
+        description: Contact {{ doc("def_hsh") }} contact.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: contact_hsh_diff
+        description: Contact {{ doc("def_hsh_diff") }}
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: valid_to_date
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+      - name: c_contact_id
+        description: C Contact Id {{ doc("def_att_id") }} a contact.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: c_gender
+        description: C Gender is the gender information of the contact.
+      - name: c_birth_date
+        description: C Birth Date is the birth date of the contact.
+      - name: c_age
+        description: C Age is the age of the contact.
+      - name: c_first_name
+        description: C First Name is the name of the contact.
+      - name: c_last_name
+        description: C Last Name is the last name of the contact.
+  
+  - name: end_of_day_balance_hub
+    description: An End Of Day Balance Hub {{ doc("def_ent_balance") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(eod_balance_hsh)"
+    columns: 
+      - name: eod_balance_hsh
+        description: EOD Balance {{ doc("def_hsh") }} end of day balance event.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: load_dt
+        description: '{{ doc("def_load_dt") }}'
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: contact_id
+        description: EOD Balance Event Id {{ doc("def_att_id") }} an end of day balance.
+        constraints:
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+  - name: end_of_day_balance_sat
+    description: An End Of Day Balance Sat {{ doc("def_ent_balance") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(eod_balance_hsh || '-' || valid_from_date)"
+    columns: 
+      - name: eod_balance_hsh
+        description: EOD Balance {{ doc("def_hsh") }} end of day balance event.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: eod_balance_hsh_diff
+        description: Eod Balance {{ doc("def_hsh_diff") }}
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: valid_to_date
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+      - name: eod_balance_event_id
+        description: EOD Balance Event Id {{ doc("def_att_id") }} an end of day balance.
+        constraints:
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: eod_balance_amount
+        description: An EOD Balance Amount is the end of day balance of an account in Euros.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+
+  - name: eod_balance_account_link
+    description: An eod_balance_account_link {{ doc("def_ent_link") }} accounts and end of day balances.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(account_hsh || '-' || eod_balance_hsh)"
+    columns: 
+      - name: link_hsh
+        description: Link {{ doc("def_hsh") }} account and eod balance link.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: account_hsh
+        description: Account {{ doc("def_hsh") }} account.
+      - name: eod_balance_hsh
+        description: EOD Balance {{ doc("def_hsh") }} end of day balance event.
+
+  - name: product_hub
+    description: A Product Hub {{ doc("def_ent_product") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(product_hsh)"
+    columns: 
+      - name: product_hsh
+        description: Product {{ doc("def_hsh") }} product.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: load_dt
+        description: '{{ doc("def_load_dt") }}'
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: product_id
+        description: Product Id {{ doc("def_att_id") }} an product.
+        constraints:
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+  
+  - name: product_sat
+    description: A Product Sat {{ doc("def_ent_product") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(product_hsh || '-' || valid_from_date)"
+    columns: 
+      - name: product_hsh
+        description: Product {{ doc("def_hsh") }} product.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: product_hsh_diff
+        description: Product {{ doc("def_hsh_diff") }}
+      - name: rec_src
+        description: '{{ doc("def_rec_src") }}'
+      - name: valid_to_date
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+      - name: p_product_id
+        description: P Product Id {{ doc("def_att_id") }} a product.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: p_product_name
+        description: A Product Name is the name of a product.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
