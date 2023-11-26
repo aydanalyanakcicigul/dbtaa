@@ -1,5 +1,5 @@
 {% docs __overview__ %}
-# Welcome to the User Data Model of AE
+# Welcome to the User Data Model of Fact End Of Day Balance
 This project includes a set of models to create the dimensional model of End Of Day Balance.
 
 The layers on this dimensional model:
@@ -43,10 +43,13 @@ Try running the following commands:
 - **dbt build** (or dbt seed + dbt test + dbt run) to regenerate the entire model
 - **dbt docs generate** to regenerate the documentation
 
+#### The locations of DRY (don't repeat yourself) code source files:
+- In [*dbt_project.yml*](https://github.com/aydanalyanakcicigul/dbtaa/blob/main/dbt_project.yml) file, you can find the variables used in models.
+- In [*models/shared_definitions.md*](https://github.com/aydanalyanakcicigul/dbtaa/blob/main/models/shared_definitions.md) file, you can find the code blocks of shared definitions used in yml files.
+
 ### Resources:
-- GitHub link of this repository: [click]()
+- GitHub link of this repository: [click](https://github.com/aydanalyanakcicigul/dbtaa)
 - Check out the ERD diagrams of the data model: [click]()
-- Check out the DBT docs: [click]() for extensive information of each tables and columns
-- The linked data lake: [click]()
-- And lastly, check an example report which is created on dimensional data model: [click]()
+- Check out the DBT docs: [click](https://aydanalyanakcicigul.github.io/dbtaa/#!/overview) for extensive information of each tables and columns
+- The linked data lake: [click](https://console.cloud.google.com/bigquery?project=key-hope-406212)
 {% enddocs %}
