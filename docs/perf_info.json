@@ -5,20 +5,20 @@
     "static_analysis_parsed_path_count": 0,
     "is_partial_parse_enabled": true,
     "is_static_analysis_enabled": true,
-    "read_files_elapsed": 0.06533019314520061,
-    "load_macros_elapsed": 0.000649329973384738,
-    "parse_project_elapsed": 0.0005416481290012598,
-    "patch_sources_elapsed": 1.5038996934890747e-05,
-    "process_manifest_elapsed": 0.00019440706819295883,
-    "load_all_elapsed": 0.15537690604105592,
+    "read_files_elapsed": 0.05744595406576991,
+    "load_macros_elapsed": 0.000584878958761692,
+    "parse_project_elapsed": 0.0005235569551587105,
+    "patch_sources_elapsed": 1.4703022316098213e-05,
+    "process_manifest_elapsed": 0.0001841410994529724,
+    "load_all_elapsed": 0.16789124417118728,
     "projects": [
         {
             "project_name": "ae_project",
-            "elapsed": 0.0003647799603641033,
+            "elapsed": 0.00037179887294769287,
             "parsers": [
                 {
                     "parser": "doc",
-                    "elapsed": 0.00035855197347700596,
+                    "elapsed": 0.00036545703187584877,
                     "parsed_path_count": 1
                 }
             ],

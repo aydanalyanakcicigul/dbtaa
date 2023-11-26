@@ -48,8 +48,12 @@ Try running the following commands:
 - In [*models/shared_definitions.md*](https://github.com/aydanalyanakcicigul/dbtaa/blob/main/models/shared_definitions.md) file, you can find the code blocks of shared definitions used in yml files.
 
 ### Resources:
-- GitHub link of this repository: [click](https://github.com/aydanalyanakcicigul/dbtaa)
-- Check out the ERD diagrams of the data model: [click]()
+- GitHub link of this repository: [click](https://github.com/aydanalyanakcicigul/dbtaa/tree/main)
 - Check out the DBT docs: [click](https://aydanalyanakcicigul.github.io/dbtaa/#!/overview) for extensive information of each tables and columns
 - The linked data lake: [click](https://console.cloud.google.com/bigquery?project=key-hope-406212)
+
+### Attached Resources as Project Deliverables:
+- Project Report (contains all details)
+- ERD Diagrams of Data Models (Data Vault & Data Mart)
+- Sample Data
 {% enddocs %}
