@@ -9,6 +9,9 @@ WITH source as (
 
 select 
     md5(cast(full_date as string)) as dim_date_id,
-    full_date as date
+    full_date as date,
+    year,
+    month,
+    year_day as day
 from source
 order by date

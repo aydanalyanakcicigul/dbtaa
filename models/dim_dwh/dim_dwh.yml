@@ -1,0 +1,262 @@
+version: 2
+
+models:
+  - name: dim_account
+    description: A Dim Account {{ doc("def_ent_account") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(dim_account_id || '-' || valid_from_date)"
+    columns: 
+      - name: dim_account_id
+        description: A Dim Account Id {{ doc("def_hsh") }} account.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_to_date
+        tests:
+          - not_null
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: account_id
+        description: An Account Id {{ doc("def_att_id") }} an account.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: account_user_type
+        description: An Account User Type is the type of the user (owner or user) an account.
+
+  - name: dim_contact
+    description: A Dim Contact {{ doc("def_ent_contact") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name:  "(dim_contact_id || '-' || valid_from_date)"
+    columns: 
+      - name: dim_contact_id
+        description: A Dim Contact Id {{ doc("def_hsh") }} contact.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_to_date
+        tests:
+          - not_null
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: contact_id
+        description: Contact Id {{ doc("def_att_id") }} a contact.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: alternative_contact_id
+        description: An Alternative Contact is the contact id of the customer if the same customer is a part of different source system with a different identifier.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: gender
+        description: Gender is the gender information of the contact.
+      - name: birth_date
+        description: Birth Date is the birth date of the contact.
+      - name: age
+        description: Age is the age of the contact.
+      - name: first_name
+        description: First Name is the name of the contact.
+      - name: last_name
+        description: Last Name is the last name of the contact.
+  
+  - name: dim_product
+    description: A Dim Product {{ doc("def_ent_product") }}.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(dim_product_id || '-' || valid_from_date)"
+    columns: 
+      - name: dim_product_id
+        description: Dim_product_id {{ doc("def_hsh") }} product.
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_from_date
+        description: '{{ doc("def_valid_from_date") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+      - name: valid_to_date
+        tests:
+          - not_null
+        description: '{{ doc("def_valid_to_date") }}'
+      - name: current_indicator
+        description: '{{ doc("def_current_indicator") }}'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: deleted_indicator
+        description: '{{ doc("def_deleted_indicator") }}'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: product_id
+        description: Product Id {{ doc("def_att_id") }} a product.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: product_name
+        description: A Product Name is the name of a product.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+  
+  - name: dim_date
+    description: A Dim Date is the date dimensions of calendar dates.
+    config:
+      materialized: table
+    tests:
+      - unique:
+          column_name: "(dim_date_id)"
+    columns: 
+      - name: dim_date_id
+        description: Dim_date_id {{ doc("def_hsh") }} date.
+        constraints:
+          - type: primary_key
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: date
+        description: Date is the calendar date.
+        constraints:
+          - type: unique
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+      - name: day
+        description: A Day is the number of the day of calendar date.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: month
+        description: A Month is the number of the month of calendar date.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: year
+        description: A Year is the number of the year of calendar date.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+
+  - name: fact_end_of_day_balance
+    description: A Fact End Of Day Balance is the fact table of the dimensional model, which is containing the end of day balance amounts of contact accounts.
+    config:
+      materialized: table
+    columns:
+      - name: dim_contact_id
+        description: A Dim Contact Id {{ doc("def_hsh") }} contact.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: dim_account_id
+        description: A Dim Account Id {{ doc("def_hsh") }} account.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: dim_product_id
+        description: A Dim Product Id {{ doc("def_hsh") }} product.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: dim_eod_valid_from_date_id
+        description: A Dim Eod Valid From Date Id {{ doc("def_hsh") }} date (which the eod balance is valid from).
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: dim_eod_valid_to_date_id
+        description: A Dim Eod Valid To Date Id {{ doc("def_hsh") }} date (which the eod balance is valid until).
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: latest_eod_balance_indicator
+        description: A Latest EOD Balance Indicator indicates if the EOD Balance is still the most up to date amount.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              quote: false
+      - name: eod_balance_amount
+        description: An EOD Balance Amount is the end of day balance of an account in Euros.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null

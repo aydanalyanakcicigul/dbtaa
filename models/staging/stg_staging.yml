@@ -2,58 +2,75 @@ version: 2
 
 sources:
   - name: crm_a
+    description: Crm_a is the source of the data coming from CRM System - A.
     database: key-hope-406212
     schema: crm_a
     tables:
       - name: contact
+        description: Contact {{ doc("def_source_data") }}
         loaded_at_field: _PARTITIONTIME
         freshness:
           warn_after: {count: 24, period: hour}
         
       - name: account
+        description: Account {{ doc("def_source_data") }}
         loaded_at_field: _PARTITIONTIME
         freshness:
           warn_after: {count: 24, period: hour}
 
   - name: crm_b
+    description: Crm_b is the source of the data coming from CRM System - B.
     database: key-hope-406212
     schema: crm_b
     tables:
       - name: contact
+        description: Contact {{ doc("def_source_data") }}
         loaded_at_field: _PARTITIONTIME
         freshness:
           warn_after: {count: 24, period: hour}
         
       - name: account
+        description: Account {{ doc("def_source_data") }}
         loaded_at_field: _PARTITIONTIME
         freshness:
           warn_after: {count: 24, period: hour}
 
   - name: fin_a
+    description: Fin_a is the transaction data of the customers from CRM System - A.
     database: key-hope-406212
     schema: fin_a
     tables:
       - name: completedtrans
+        description: Completedtrans {{ doc("def_source_data") }}
         loaded_at_field: _PARTITIONTIME
         freshness:
           warn_after: {count: 24, period: hour}
 
   - name: fin_b
+    description: Fin_b is the transaction data of the customers from CRM System - B.
     database: key-hope-406212
     schema: fin_b
     tables:
       - name: completedtrans
+        description: Completedtrans {{ doc("def_source_data") }}
         loaded_at_field: _PARTITIONTIME
         freshness:
           warn_after: {count: 24, period: hour}
 
 models:
   - name: stg_sources__contact
+    description: This {{ doc("def_staging_entity") }} contacts.
     config:
       materialized: view
   - name: stg_sources__account
+    description: This {{ doc("def_staging_entity") }} accounts.
     config:
       materialized: view
   - name: stg_sources__completedtrans
+    description: This {{ doc("def_staging_entity") }} transactions.
+    config:
+      materialized: view
+  - name: stg_sources__date
+    description: This {{ doc("def_staging_entity") }} date dimensions.
     config:
       materialized: view
